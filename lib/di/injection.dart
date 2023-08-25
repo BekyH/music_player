@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_player/data/repostiories/music_repo_impl.dart';
 import 'package:music_player/domain/repositories/music_repo.dart';
@@ -7,6 +8,7 @@ import 'package:music_player/presentation/bloc/music_player_bloc.dart';
 final sl = GetIt.instance;
 Future<void> serviceLocatorInit() async {
 
+  sl.registerLazySingleton<AudioPlayer>(() => AudioPlayer());
    // Register repositories
   sl.registerLazySingleton<MusicRepository>(() => MusicRepositoryImpl());
 
@@ -14,5 +16,5 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetMusicFiles(sl()));
 
   // Register BLoCs
-  sl.registerFactory(() => MusicPlayerBloc(sl()));
+  sl.registerFactory(() => MusicPlayerBloc(sl(),sl()));
 }

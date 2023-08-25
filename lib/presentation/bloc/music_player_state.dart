@@ -14,11 +14,27 @@ class MusicPlayerLoading extends MusicPlayerState {}
 
 class MusicPlayerLoaded extends MusicPlayerState {
   final List<AudioFile> musicFiles;
+  final Map<String, List<AudioFile>> albums;
+  final Map<String, List<AudioFile>> artists;
 
-  const MusicPlayerLoaded(this.musicFiles);
+  MusicPlayerLoaded({
+    required this.musicFiles,
+    required this.albums,
+    required this.artists,
+  });
 
   @override
-  List<Object?> get props => [musicFiles];
+  List<Object?> get props => [musicFiles, albums, artists];
+}
+
+class MusicPlayerLoadedWithAlbums extends MusicPlayerState {
+  final List<AudioFile> musicFiles;
+  final Map<String, List<AudioFile>> albums;
+
+  const MusicPlayerLoadedWithAlbums(this.musicFiles, this.albums);
+
+  @override
+  List<Object?> get props => [musicFiles, albums];
 }
 
 class MusicPlayerError extends MusicPlayerState {
@@ -28,4 +44,31 @@ class MusicPlayerError extends MusicPlayerState {
 
   @override
   List<Object?> get props => [message];
+}
+
+class MusicPlaying extends MusicPlayerState {
+  final AudioFile audioFile;
+
+  const MusicPlaying(this.audioFile);
+
+  @override
+  List<Object?> get props => [audioFile];
+}
+
+class MusicPaused extends MusicPlayerState {
+  final AudioFile audioFile;
+
+  const MusicPaused(this.audioFile);
+
+  @override
+  List<Object?> get props => [audioFile];
+}
+
+class MusicStopped extends MusicPlayerState {
+  final AudioFile audioFile;
+
+  const MusicStopped(this.audioFile);
+
+  @override
+  List<Object?> get props => [audioFile];
 }

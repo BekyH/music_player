@@ -28,19 +28,77 @@ class MusicRepositoryImpl implements MusicRepository {
 
         for (final file in musicFileList) {
           if (file is File && file.path.endsWith('.mp3')) {
+            String albumName = 'Unknown Album';
+            String artistName = 'Unknown Artist';
             musicFiles.add(AudioFile(
               path: file.path,
-              name:
-                  file.path.split('/').last, // Get the file name from the path
+              name: file.path.split('/').last,
+              albumName: albumName,
+              artistName: artistName,
             ));
           }
         }
+
+        Map<String, List<AudioFile>> albums = {};
+        Map<String, List<AudioFile>> artists = {};
+
+        musicFiles.forEach((audioFile) {
+          albums.putIfAbsent(audioFile.albumName, () => []).add(audioFile);
+          artists.putIfAbsent(audioFile.artistName, () => []).add(audioFile);
+        });
       }
-    } catch (e) {
-      // Handle errors here
-      print('Error fetching music files: $e');
-    }
+    } catch (e) {}
 
     return musicFiles;
+  }
+
+  Map<String, List<AudioFile>> categorizeByArtist(List<AudioFile> musicFiles) {
+    Map<String, List<AudioFile>> artistMap = {};
+
+    for (var musicFile in musicFiles) {
+      String artistName = getArtistFromPath(musicFile.path);
+      if (artistMap.containsKey(artistName)) {
+        artistMap[artistName]!.add(musicFile);
+      } else {
+        artistMap[artistName] = [musicFile];
+      }
+    }
+
+    return artistMap;
+  }
+
+  String getArtistFromPath(String path) {
+    List<String> parts = path.split('/');
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i] == 'Music' && i + 2 < parts.length) {
+        return parts[i + 2];
+      }
+    }
+    return 'Unknown Artist'; //
+  }
+
+  Map<String, List<AudioFile>> categorizeByAlbum(List<AudioFile> musicFiles) {
+    Map<String, List<AudioFile>> albumMap = {};
+
+    for (var musicFile in musicFiles) {
+      String albumName = getAlbumFromPath(musicFile.path);
+      if (albumMap.containsKey(albumName)) {
+        albumMap[albumName]!.add(musicFile);
+      } else {
+        albumMap[albumName] = [musicFile];
+      }
+    }
+
+    return albumMap;
+  }
+
+  String getAlbumFromPath(String path) {
+    List<String> parts = path.split('/');
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i] == 'Music' && i + 1 < parts.length) {
+        return parts[i + 1]; //
+      }
+    }
+    return 'Unknown Album'; //
   }
 }
