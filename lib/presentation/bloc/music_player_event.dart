@@ -8,3 +8,4 @@ abstract class MusicPlayerEvent extends Equatable {
 }
 
 class FetchMusicFiles extends MusicPlayerEvent {}
+class FetchAlbums extends MusicPlayerEvent {}
