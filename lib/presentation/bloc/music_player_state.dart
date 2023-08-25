@@ -45,3 +45,30 @@ class MusicPlayerError extends MusicPlayerState {
   @override
   List<Object?> get props => [message];
 }
+
+class MusicPlaying extends MusicPlayerState {
+  final AudioFile audioFile;
+
+  const MusicPlaying(this.audioFile);
+
+  @override
+  List<Object?> get props => [audioFile];
+}
+
+class MusicPaused extends MusicPlayerState {
+  final AudioFile audioFile;
+
+  const MusicPaused(this.audioFile);
+
+  @override
+  List<Object?> get props => [audioFile];
+}
+
+class MusicStopped extends MusicPlayerState {
+  final AudioFile audioFile;
+
+  const MusicStopped(this.audioFile);
+
+  @override
+  List<Object?> get props => [audioFile];
+}

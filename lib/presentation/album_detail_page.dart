@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/domain/entities/audio_file.dart';
 import 'package:music_player/presentation/widgets/music_card.dart';
+import 'package:music_player/presentation/widgets/music_card_with_controls.dart';
 
 class AlbumDetailPage extends StatelessWidget {
   final String albumName;
@@ -20,7 +21,7 @@ class AlbumDetailPage extends StatelessWidget {
       body: ListView.builder(
         itemCount: albumFiles.length,
         itemBuilder: (context, index) {
-          return MusicCard(audioFile: albumFiles[index]);
+          return MusicCardWithControls(audioFile: albumFiles[index]);
         },
       ),
     );

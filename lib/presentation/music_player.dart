@@ -60,7 +60,7 @@ class MusicPlayer extends StatelessWidget {
                   } else if (state is MusicPlayerError) {
                     return Center(child: Text(state.message));
                   }
-                  return Container(); // Handle other states as needed
+                  return Container(child: Text('data'),); // Handle other states as needed
                 },
               ),
 

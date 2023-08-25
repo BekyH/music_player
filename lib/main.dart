@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp(
-                title: 'Porto',
+                title: 'Music',
                 debugShowCheckedModeBanner: false,
                 home: MusicPlayer(),
             );

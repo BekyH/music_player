@@ -34,7 +34,7 @@ class MusicRepositoryImpl implements MusicRepository {
               path: file.path,
               name: file.path.split('/').last,
               albumName: albumName,
-              artistName: artistName, // Get the file name from the path
+              artistName: artistName,
             ));
           }
         }
@@ -47,10 +47,7 @@ class MusicRepositoryImpl implements MusicRepository {
           artists.putIfAbsent(audioFile.artistName, () => []).add(audioFile);
         });
       }
-    } catch (e) {
-      // Handle errors here
-      print('Error fetching music files: $e');
-    }
+    } catch (e) {}
 
     return musicFiles;
   }
@@ -70,17 +67,17 @@ class MusicRepositoryImpl implements MusicRepository {
     return artistMap;
   }
 
- String getArtistFromPath(String path) {
-  List<String> parts = path.split('/');
-  for (int i = 0; i < parts.length; i++) {
-    if (parts[i] == 'Music' && i + 2 < parts.length) {
-      return parts[i + 2]; // Return the part after 'Music'
+  String getArtistFromPath(String path) {
+    List<String> parts = path.split('/');
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i] == 'Music' && i + 2 < parts.length) {
+        return parts[i + 2];
+      }
     }
+    return 'Unknown Artist'; //
   }
-  return 'Unknown Artist'; // Default if artist is not found
-}
 
-   Map<String, List<AudioFile>> categorizeByAlbum(List<AudioFile> musicFiles) {
+  Map<String, List<AudioFile>> categorizeByAlbum(List<AudioFile> musicFiles) {
     Map<String, List<AudioFile>> albumMap = {};
 
     for (var musicFile in musicFiles) {
@@ -95,16 +92,13 @@ class MusicRepositoryImpl implements MusicRepository {
     return albumMap;
   }
 
- String getAlbumFromPath(String path) {
-  List<String> parts = path.split('/');
-  for (int i = 0; i < parts.length; i++) {
-    if (parts[i] == 'Music' && i + 1 < parts.length) {
-      return parts[i + 1]; // Return the part after 'Music'
+  String getAlbumFromPath(String path) {
+    List<String> parts = path.split('/');
+    for (int i = 0; i < parts.length; i++) {
+      if (parts[i] == 'Music' && i + 1 < parts.length) {
+        return parts[i + 1]; //
+      }
     }
+    return 'Unknown Album'; //
   }
-  return 'Unknown Album'; // Default if album is not found
 }
-
-}
-
-
